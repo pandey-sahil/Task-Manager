@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="main h-screen w-screen bg-zinc-900 text-white p-10">
+        <div class="form">
+            <form action="/create" method="post">
+                <input type="text" name="title" placeholder="Task Name"
+                    class="inline-block w-full rounded-md p-3 bg-zinc-600 outline-none mb-2"><br>
+                <textarea name="details" class="inline-block w-full rounded-md p-3 bg-zinc-600 outline-none resize-none"
+                    placeholder="Enter Something"></textarea>
+                <input class="px-6 py-2 bg-blue-600 rounded-md mt-2" type="submit">
+            </form>
+        </div>
+        <div class="tasks flex flex-wrap  py-10 gap-4 select-none">
+            <% if(files.length> 0){ %>
+                <% files.forEach(function(file){ %>
+                    <div class="task w-72 p-3 bg-zinc-800 rounded-lg overflow-hidden">
+                        <h1 class="text-3xl tracking-tighter mb-5">
+                            <%= file.name %>
+                        </h1>
+                        <p class="text-xl tracking-tighter mb-5">
+                            <% if(file.content.length > 19){ %>
+                            <%= file.content.substring(0, 20) + '...' %>
+                            <% } else { %>
+                                <%= file.content %>
+                                <% } %>
+                        </p>
+                        <a class="text-blue-500" href="/read/<%= file.name %>">Read more..</a>
+                    </div>
+                    <% })} else {%>
+                            <h3 class="text-xl px-5 py-10 text-zinc-500"> no task yet</h3>
+                            <% } %>
+
+
+        </div>
+    </div>
+</body>
+
+</html>
