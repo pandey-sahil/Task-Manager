@@ -17,16 +17,25 @@
         <a class="text-blue-500 py-10" href="/"><i class="ri-close-large-line"></i> Go back</a>
         <a class="text-red-500 px-5" href="/delete/<%= name %>"><i class="ri-delete-bin-6-line"> Delete</i></a>
         <a class="text-yellow-500 " href="/save/<%= name %>"></a>
+        <form action="/save/<%= name %>" method="post">
+            <div class="flex gap-4 items-center">
+                <input type="text" name="title" placeholder="Task Name" onclick="read()" disabled class="filenamee disabled:opacity-75 inline-block w-96 h-14 rounded-md p-3 bg-zinc-600 outline-none " value="<%= name %>">
             <h1 class="text-3xl tracking-tighter my-5">
-                <%= name %>
+                <i onclick="read()" class="ri-pencil-line"></i>
             </h1>
+            </div>
+            
             <p class="text-xl tracking-tighter mb-5">
-                <form action="/save/<%= name %>" method="post">
                     <textarea name="details" class="bg-zinc-600 h-full w-full inline-block w-full rounded-md p-3 bg-zinc-600 outline-none resize-none" cols="50" rows="10"><%= content %></textarea>
                     <input class="px-6 py-2 bg-blue-600 rounded-md mt-2" type="submit" value="Save">
-                </form>
-            </p>
+                </p>
+            </form>
     </div>
 </body>
-
+<script>
+    function read(){
+        var filename = document.querySelector('.filenamee')
+            filename.removeAttribute('disabled')
+    }
+</script>
 </html>

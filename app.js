@@ -14,9 +14,9 @@ app.get('/', function (req, res) {
       var data = fs.readFileSync(`./files/${file}`, 'utf-8');
       arr.push({ name: file, content: data })
     })
-    // console.log(arr)
     res.render('index', { files: arr })
   })
+  console.log(arr)
 })
 
 // create file
@@ -49,16 +49,30 @@ app.get('/delete/:filename', function (req, res) {
   })
 
 })
+
 // Save file
 app.post('/save/:filename', function (req, res) {
-  var fn = req.params.filename;
+  const fn = req.params.filename;
+  let newFn = req.body.title.split(' ').join('');
+  
   fs.writeFile(`./files/${fn}`, req.body.details, function (err) {
     if (err) {
-      res.status(404).send('folder not found')
+      return res.status(500).send('Error!');
     }
-  })
-res.redirect('/')
-})
+    
+    // Renaming the file
+    const ext = newFn.includes('.');
+    if (!ext) {
+      newFn += '.txt';
+    }
+    fs.rename(`./files/${fn}`, `./files/${newFn}`, function (err) {
+      if (err) {
+        return res.status(500).send('Error renaming file');
+      }
+      res.redirect('/');
+    });
+  });
+});
 
 
 
